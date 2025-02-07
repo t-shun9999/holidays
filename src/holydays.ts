@@ -78,7 +78,8 @@ const ALL_HOLYDAYS = [
 
 export function getHolydays(year: number): Holyday[];
 export function getHolydays(year: number, month: number): Holyday[];
-export function getHolydays(year: number, month?: number): Holyday[] {
+export function getHolydays(year: number, month: number, day: number): Holyday[];
+export function getHolydays(year: number, month?: number, day?: number): Holyday[] {
 
     const holydaysYear = ALL_HOLYDAYS.find(holyday => {
         return holyday.year === year
@@ -94,14 +95,28 @@ export function getHolydays(year: number, month?: number): Holyday[] {
             })
         }).flat();
     }
-    return holydaysYear!.months.filter(holydayMonths => {
+
+    if (day == null) {
+        return holydaysYear!.months.filter(holydayMonths => {
+            return holydayMonths.month === month;
+        }).map(holydayMonths => {
+            return holydayMonths.days.map(holydays => {
+                return {
+                    date: `${year}/${holydayMonths.month.toString().padStart(2, '0')}/${holydays.day.toString().padStart(2, '0')}`,
+                    name: holydays.name
+                } as Holyday
+            })
+        }).flat();
+    }
+
+    return holydaysYear!.months.find(holydayMonths => {
         return holydayMonths.month === month;
-    }).map(holydayMonths => {
-        return holydayMonths.days.map(holydays => {
-            return {
-                date: `${year}/${holydayMonths.month.toString().padStart(2, '0')}/${holydays.day.toString().padStart(2, '0')}`,
-                name: holydays.name
-            } as Holyday
-        })
-    }).flat();
+    })!.days.filter(holyday => {
+        return holyday.day === day
+    }).map(holyday => {
+        return {
+            date: `${year}/${month.toString().padStart(2, '0')}/${holyday.day.toString().padStart(2, '0')}`,
+            name: holyday.name
+        } as Holyday
+    });
 }

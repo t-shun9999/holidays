@@ -39,4 +39,15 @@ describe('getHolydays', () => {
         expect(result[0]).toEqual({ date: '2025/01/01', name: '元旦' })
         expect(result[1]).toEqual({ date: '2025/01/13', name: '成人の日' })
     });
+
+    /**
+     * 
+     */
+    test('指定年月日の祝日が取得できること', () => {
+        const result = getHolydays(2025, 1, 13);
+
+        expect(result.length).toBe(1);
+        expect(result[0]).toEqual({ date: '2025/01/13', name: '成人の日' })
+    });
+
 });

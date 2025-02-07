@@ -28,4 +28,15 @@ describe('getHolydays', () => {
         expect(result[13]).toEqual({ date: '2025/11/03', name: '文化の日' })
         expect(result[14]).toEqual({ date: '2025/11/24', name: '勤労感謝の日（振替）' })
     });
+
+    /**
+     * 
+     */
+    test('指定年月の祝日がすべて取得できること', () => {
+        const result = getHolydays(2025, 1);
+
+        expect(result.length).toBe(2);
+        expect(result[0]).toEqual({ date: '2025/01/01', name: '元旦' })
+        expect(result[1]).toEqual({ date: '2025/01/13', name: '成人の日' })
+    });
 });

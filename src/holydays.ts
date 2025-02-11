@@ -117,8 +117,10 @@ export function getHolydays(year: number, month?: number, day?: number): Holyday
         return holyday.year === year
     });
 
+    if (holydaysYear == null) return [];
+
     if (month == null) {
-        return holydaysYear!.months.map(holydayMonths => {
+        return holydaysYear.months.map(holydayMonths => {
             return holydayMonths.days.map(holydays => {
                 return createHolydays(year, holydayMonths.month, holydays);
             })
@@ -126,7 +128,7 @@ export function getHolydays(year: number, month?: number, day?: number): Holyday
     }
 
     if (day == null) {
-        return holydaysYear!.months.filter(holydayMonths => {
+        return holydaysYear.months.filter(holydayMonths => {
             return holydayMonths.month === month;
         }).map(holydayMonths => {
             return holydayMonths.days.map(holydays => {
@@ -135,7 +137,7 @@ export function getHolydays(year: number, month?: number, day?: number): Holyday
         }).flat();
     }
 
-    return holydaysYear!.months.find(holydayMonths => {
+    return holydaysYear.months.find(holydayMonths => {
         return holydayMonths.month === month;
     })!.days.filter(holyday => {
         return holyday.day === day

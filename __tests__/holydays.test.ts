@@ -50,4 +50,12 @@ describe('getHolydays', () => {
         expect(result[0]).toEqual({ date: '2025/01/13', name: '成人の日' })
     });
 
+    /**
+     * 
+     */
+    test('指定した年に祝日が存在しない場合、空配列が取得されること', () => {
+        const result = getHolydays(2024);
+
+        expect(result.length).toBe(0);
+    });
 });

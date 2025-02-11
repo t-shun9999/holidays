@@ -69,4 +69,14 @@ describe('getHolydays', () => {
         expect(result.length).toBe(0);
         expect(result).toEqual([]);
     });
+
+    /**
+     * 
+     */
+    test('指定した年月日に祝日が存在しない場合、空配列が取得されること', () => {
+        const result = getHolydays(2024, 4, 1);
+
+        expect(result.length).toBe(0);
+        expect(result).toEqual([]);
+    });
 });

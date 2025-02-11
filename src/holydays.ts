@@ -1,3 +1,6 @@
+import { DateTime } from "luxon"
+import { ValidationError } from "./error";
+
 type Holyday = {
     date: string,
     name: string
@@ -113,6 +116,8 @@ export function getHolydays(year: number, month: number): Holyday[];
 export function getHolydays(year: number, month: number, day: number): Holyday[];
 export function getHolydays(year: number, month?: number, day?: number): Holyday[] {
 
+    validateCheck(year, month, day);
+
     const holydaysYear = getAllHolydays().find(holyday => {
         return holyday.year === year
     });
@@ -170,4 +175,17 @@ function createHolydays(year: number, month: number, days: { day: number; name: 
  */
 function formatDate(year: number, month: number, day: number): string {
     return `${year}/${month.toString().padStart(2, '0')}/${day.toString().padStart(2, '0')}`
+}
+
+function validateCheck(year: number, month?: number, day?: number): void {
+
+    if (month == null) {
+        if (DateTime.fromObject({ year }).isValid === false) throw new ValidationError
+    }
+
+    if (day == null) {
+        if (DateTime.fromObject({ year, month }).isValid === false) throw new ValidationError
+    }
+
+    if (DateTime.fromObject({ year, month, day }).isValid === false) throw new ValidationError
 }

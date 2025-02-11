@@ -1,3 +1,4 @@
+import { ValidationError } from '#/error';
 import { getHolydays } from '#/holydays';
 
 /**
@@ -78,5 +79,19 @@ describe('getHolydays', () => {
 
         expect(result.length).toBe(0);
         expect(result).toEqual([]);
+    });
+
+    /**
+     * 
+     */
+    test('不正な年月を指定した場合、ValidationErrorがThrowされること', () => {
+        expect(() => getHolydays(2024, 13)).toThrow(new ValidationError())
+    });
+
+    /**
+     * 
+     */
+    test('不正な年月日を指定した場合、ValidationErrorがThrowされること', () => {
+        expect(() => getHolydays(2024, 2, 30)).toThrow(new ValidationError())
     });
 });

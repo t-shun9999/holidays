@@ -2,12 +2,12 @@ import { DateTime } from "luxon"
 import { ValidationError } from "./error";
 import { validateCheck } from "./util/date";
 
-type Holyday = {
+type Holiday = {
     date: string,
     name: string
 }
 
-function getAllHolydays(): {
+function getAllHolidays(): {
     year: number;
     months: {
         month: number;
@@ -97,7 +97,7 @@ function getAllHolydays(): {
  * 
  * @returns 祝日の配列
  */
-export function getHolydays(year: number): Holyday[];
+export function getHolidays(year: number): Holiday[];
 /**
  * 指定した年月の祝日を取得する。
  * @param year 
@@ -105,7 +105,7 @@ export function getHolydays(year: number): Holyday[];
  * 
  * @returns 祝日の配列
  */
-export function getHolydays(year: number, month: number): Holyday[];
+export function getHolidays(year: number, month: number): Holiday[];
 /**
  * 指定した年月日の祝日を取得する。
  * @param year 
@@ -114,41 +114,41 @@ export function getHolydays(year: number, month: number): Holyday[];
  * 
  * @returns 祝日の配列
  */
-export function getHolydays(year: number, month: number, day: number): Holyday[];
-export function getHolydays(year: number, month?: number, day?: number): Holyday[] {
+export function getHolidays(year: number, month: number, day: number): Holiday[];
+export function getHolidays(year: number, month?: number, day?: number): Holiday[] {
 
     validateCheck(year, month, day);
 
-    const holydaysYear = getAllHolydays().find(holyday => {
-        return holyday.year === year
+    const holidaysYear = getAllHolidays().find(holiday => {
+        return holiday.year === year
     });
 
-    if (holydaysYear == null) return [];
+    if (holidaysYear == null) return [];
 
     if (month == null) {
-        return holydaysYear.months.map(holydayMonths => {
-            return holydayMonths.days.map(holydays => {
-                return createHolydays(year, holydayMonths.month, holydays);
+        return holidaysYear.months.map(holidayMonths => {
+            return holidayMonths.days.map(holidays => {
+                return createHolidays(year, holidayMonths.month, holidays);
             })
         }).flat();
     }
 
     if (day == null) {
-        return holydaysYear.months.filter(holydayMonths => {
-            return holydayMonths.month === month;
-        }).map(holydayMonths => {
-            return holydayMonths.days.map(holydays => {
-                return createHolydays(year, holydayMonths.month, holydays);
+        return holidaysYear.months.filter(holidayMonths => {
+            return holidayMonths.month === month;
+        }).map(holidayMonths => {
+            return holidayMonths.days.map(holidays => {
+                return createHolidays(year, holidayMonths.month, holidays);
             })
         }).flat();
     }
 
-    return holydaysYear.months.find(holydayMonths => {
-        return holydayMonths.month === month;
-    })!.days.filter(holyday => {
-        return holyday.day === day
-    }).map(holyday => {
-        return createHolydays(year, month, holyday);
+    return holidaysYear.months.find(holidayMonths => {
+        return holidayMonths.month === month;
+    })!.days.filter(holiday => {
+        return holiday.day === day
+    }).map(holiday => {
+        return createHolidays(year, month, holiday);
     });
 }
 
@@ -159,11 +159,11 @@ export function getHolydays(year: number, month?: number, day?: number): Holyday
  * @param days 
  * @returns 
  */
-function createHolydays(year: number, month: number, days: { day: number; name: string; }): Holyday {
+function createHolidays(year: number, month: number, days: { day: number; name: string; }): Holiday {
     return {
         date: formatDate(year, month, days.day),
         name: days.name
-    } as Holyday
+    } as Holiday
 
 }
 

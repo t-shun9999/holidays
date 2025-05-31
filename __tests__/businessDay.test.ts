@@ -2,7 +2,7 @@ import { ValidationError } from '#/error';
 import { isBusinessDay } from '#/businessDay';
 
 /**
- * holydaysテストモジュール
+ * holidaysテストモジュール
  */
 describe('isBusinessDay', () => {
 

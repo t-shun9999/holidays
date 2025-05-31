@@ -1,16 +1,16 @@
 import { ValidationError } from '#/error';
-import { getHolydays } from '#/holydays';
+import { getHolidays } from '#/holidays';
 
 /**
- * holydaysテストモジュール
+ * holidaysテストモジュール
  */
-describe('getHolydays', () => {
+describe('getHolidays', () => {
 
     /**
      * 
      */
     test('指定年の祝日がすべて取得できること', () => {
-        const result = getHolydays(2025);
+        const result = getHolidays(2025);
 
         expect(result.length).toBe(15);
         expect(result[0]).toEqual({ date: '2025/01/01', name: '元旦' })
@@ -34,7 +34,7 @@ describe('getHolydays', () => {
      * 
      */
     test('指定年月の祝日がすべて取得できること', () => {
-        const result = getHolydays(2025, 1);
+        const result = getHolidays(2025, 1);
 
         expect(result.length).toBe(2);
         expect(result[0]).toEqual({ date: '2025/01/01', name: '元旦' })
@@ -45,7 +45,7 @@ describe('getHolydays', () => {
      * 
      */
     test('指定年月日の祝日が取得できること', () => {
-        const result = getHolydays(2025, 1, 13);
+        const result = getHolidays(2025, 1, 13);
 
         expect(result.length).toBe(1);
         expect(result[0]).toEqual({ date: '2025/01/13', name: '成人の日' })
@@ -55,7 +55,7 @@ describe('getHolydays', () => {
      * 
      */
     test('指定した年に祝日が存在しない場合、空配列が取得されること', () => {
-        const result = getHolydays(2024);
+        const result = getHolidays(2024);
 
         expect(result.length).toBe(0);
         expect(result).toEqual([]);
@@ -65,7 +65,7 @@ describe('getHolydays', () => {
      * 
      */
     test('指定した年月に祝日が存在しない場合、空配列が取得されること', () => {
-        const result = getHolydays(2024, 6);
+        const result = getHolidays(2024, 6);
 
         expect(result.length).toBe(0);
         expect(result).toEqual([]);
@@ -75,7 +75,7 @@ describe('getHolydays', () => {
      * 
      */
     test('指定した年月日に祝日が存在しない場合、空配列が取得されること', () => {
-        const result = getHolydays(2024, 4, 1);
+        const result = getHolidays(2024, 4, 1);
 
         expect(result.length).toBe(0);
         expect(result).toEqual([]);
@@ -85,13 +85,13 @@ describe('getHolydays', () => {
      * 
      */
     test('不正な年月を指定した場合、ValidationErrorがThrowされること', () => {
-        expect(() => getHolydays(2024, 13)).toThrow(new ValidationError())
+        expect(() => getHolidays(2024, 13)).toThrow(new ValidationError())
     });
 
     /**
      * 
      */
     test('不正な年月日を指定した場合、ValidationErrorがThrowされること', () => {
-        expect(() => getHolydays(2024, 2, 30)).toThrow(new ValidationError())
+        expect(() => getHolidays(2024, 2, 30)).toThrow(new ValidationError())
     });
 });

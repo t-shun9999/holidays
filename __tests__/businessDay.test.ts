@@ -1,4 +1,4 @@
-import { ValidationError } from '#/error';
+import { ValidationError } from '#/error/error';
 import { isBusinessDay } from '#/businessDay';
 
 /**

@@ -1,5 +1,6 @@
-import { getHolidays } from "./holidays";
-import { validateCheck } from "./util/date";
+import { isHoliday } from "#/holidays";
+import { validateDate } from "#/util/date";
+import { DaysOfWeek } from "#/const/daysOfWeek";
 
 /**
  * 
@@ -10,9 +11,9 @@ import { validateCheck } from "./util/date";
  */
 export function isBusinessDay(year: number, month: number, day: number): boolean {
 
-    validateCheck(year, month, day);
+    validateDate(year, month, day);
 
     const date = new Date(year, month - 1, day);
     const dayOfWeek = date.getDay();
-    return dayOfWeek !== 0 && dayOfWeek !== 6 && getHolidays(year, month, day).length === 0;
+    return dayOfWeek !== DaysOfWeek.Sunday && dayOfWeek !== DaysOfWeek.Saturday && isHoliday(year, month, day) === false;
 }

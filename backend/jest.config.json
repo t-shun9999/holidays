@@ -1,0 +1,25 @@
+{
+  "preset": "ts-jest",
+  "globals": {
+    "ts-jest": {
+        "diagnostics": false
+    },
+    "SpreadsheetApp": {}
+  },
+  "moduleNameMapper": {
+    "^#/(.+)": "<rootDir>/src/$1"
+  },
+  "moduleDirectories": [
+    "node_modules"
+  ],
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "ts",
+    "tsx"
+  ],
+  "testEnvironment": "node",
+  "transform": {
+    "^.+\\.(ts|tsx)$": "ts-jest"
+  }
+}
